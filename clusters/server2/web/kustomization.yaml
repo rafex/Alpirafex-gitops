@@ -5,4 +5,4 @@ resources:
 images:
   - name: ghcr.io/rafex/alpirafex-web
     newName: ghcr.io/rafex/alpirafex-web
-    digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
+    digest: sha256:18ac28897e3d4cbccf9c6617a6ff1ef619645717b2cc064b02cf05d8651d1a6d
