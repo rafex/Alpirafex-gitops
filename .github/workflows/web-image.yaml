@@ -15,7 +15,6 @@ on:
 permissions:
   contents: write
   packages: write
-  pull-requests: write
 
 concurrency:
   group: alpirafex-web-${{ github.ref }}
@@ -56,13 +55,15 @@ jobs:
           sed -i -E "s#digest: sha256:.*#digest: ${IMAGE_DIGEST}#" \
             clusters/server2/web/kustomization.yaml
 
-      - name: Open digest promotion PR
+      - name: Commit promoted image digest
         if: github.event_name != 'pull_request'
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore(web): promote image digest"
-          title: "chore(web): promote image digest"
-          body: "Automated promotion of the Alpirafex web image published by this commit."
-          branch: automation/alpirafex-web-digest
-          delete-branch: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add clusters/server2/web/kustomization.yaml
+          if git diff --cached --quiet; then
+            echo "Image digest is already promoted."
+            exit 0
+          fi
+          git commit -m "chore(web): promote image digest"
+          git push origin HEAD:main
