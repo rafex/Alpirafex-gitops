@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: alpirafex-web
+  namespace: alpirafex-web
+  labels:
+    app.kubernetes.io/name: alpirafex-web
+    app.kubernetes.io/part-of: alpirafex
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: alpirafex-web
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

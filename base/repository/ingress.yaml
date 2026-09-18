@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: alpirafex-repository
+  namespace: alpirafex-repo
+  labels:
+    app.kubernetes.io/name: alpirafex-repository
+    app.kubernetes.io/part-of: alpirafex
+  annotations:
+    ingress.kubernetes.io/backend-protocol: http
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: haproxy
+  rules:
+    - host: alpirafex.rafex.io
+      http:
+        paths:
+          - path: /alpirafex/v3.24
+            pathType: Prefix
+            backend:
+              service:
+                name: alpirafex-repository
+                port:
+                  number: 80

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: alpirafex-web
+  labels:
+    app.kubernetes.io/part-of: alpirafex
+    environment.rafex.dev/tier: poc
+    goldilocks.fairwinds.com/enabled: "true"
